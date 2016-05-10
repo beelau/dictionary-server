@@ -89,50 +89,45 @@ public class CSdict
 		    		System.out.println("903 Supplied command not expected at this time.");
 		    } 	        
 		    else {
-		    	if (cmnd.equals("dict")){
-		    	    if (connection == null || connection.isConnected() == false)
-		    	        System.out.println("903 Supplied command not expected at this time.");
-		    	    else if (strLength != 1)
-                        System.out.println("901 Incorrect number of arguments.");
-                    else 
-                        DictProtocol.printDictionaryList(connection, debugOn);
+		    	if (connection == null || connection.isConnected() == false) {
+		    		System.out.println("903 Supplied command not expected at this time.");
 		    	}
-		    	else if (cmnd.equals("set")) {
-		    	    if (connection == null || connection.isConnected() == false)
-                        System.out.println("903 Supplied command not expected at this time.");
-		    	    else if (strLength != 2)
-		    	        System.out.println("901 Incorrect number of arguments.");
-		    	    else 
-		    	        dictDB = strSplit[1];
+		    	else {
+			    	if (cmnd.equals("dict")){
+			    	    if (strLength != 1)
+	                        System.out.println("901 Incorrect number of arguments.");
+	                    else 
+	                        DictProtocol.printDictionaryList(connection, debugOn);
+			    	}
+			    	else if (cmnd.equals("set")) {
+			    	    if (strLength != 2)
+			    	        System.out.println("901 Incorrect number of arguments.");
+			    	    else 
+			    	        dictDB = strSplit[1];
+			    	}
+			    	else if (cmnd.equals("define")){
+			    	    if (strLength != 2)
+			    	        System.out.println("901 Incorrect number of arguments.");
+			    	    else
+			    	        DictProtocol.define(connection, dictDB, strSplit[1], debugOn);
+			    	}
+			    	else if (cmnd.equals("match")){
+			    	    if (strLength != 2)
+	                        System.out.println("901 Incorrect number of arguments.");
+	                    else
+	                        DictProtocol.match(connection, dictDB, "exact", strSplit[1], debugOn, false);
+			    	}
+			    	else if (cmnd.equals("prefixmatch")) {
+			    		if (strLength != 2)
+	                        System.out.println("901 Incorrect number of arguments.");
+	                    else
+	                        DictProtocol.match(connection, dictDB, "prefix", strSplit[1], debugOn, false);
+			    	}
+			    	else if (cmnd.isEmpty() || cmnd.startsWith("#"))
+	                    continue;
+			    	else 
+			    	    System.out.println("900 Invalid command.");
 		    	}
-		    	else if (cmnd.equals("define")){
-		    	    if (connection == null || connection.isConnected() == false)
-                        System.out.println("903 Supplied command not expected at this time.");
-		    	    else if (strLength != 2)
-		    	        System.out.println("901 Incorrect number of arguments.");
-		    	    else
-		    	        DictProtocol.define(connection, dictDB, strSplit[1], debugOn);
-		    	}
-		    	else if (cmnd.equals("match")){
-		    	    if (connection == null || connection.isConnected() == false)
-                        System.out.println("903 Supplied command not expected at this time.");
-		    	    else if (strLength != 2)
-                        System.out.println("901 Incorrect number of arguments.");
-                    else
-                        DictProtocol.match(connection, dictDB, "exact", strSplit[1], debugOn, false);
-		    	}
-		    	else if (cmnd.equals("prefixmatch")) {
-		    	    if (connection == null || connection.isConnected() == false)
-                        System.out.println("903 Supplied command not expected at this time.");
-		    	    else if (strLength != 2)
-                        System.out.println("901 Incorrect number of arguments.");
-                    else
-                        DictProtocol.match(connection, dictDB, "prefix", strSplit[1], debugOn, false);
-		    	}
-		    	else if (cmnd.isEmpty() || cmnd.startsWith("#"))
-                    continue;
-		    	else 
-		    	    System.out.println("900 Invalid command.");
 		    }
 
 	    } // end of for loop
